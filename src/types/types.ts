@@ -25,7 +25,7 @@ interface FormActionsProps{
 }
 
 interface InputProps extends LoginFields {
-  handleChange: (e:React.ChangeEvent) => void;
+  handleChange: (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   value: string;
   customClass: string;
 }

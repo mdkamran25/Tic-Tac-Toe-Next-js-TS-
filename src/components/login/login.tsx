@@ -13,7 +13,7 @@ fields.forEach((field) => (fieldsState[field.id] = ""));
 export default function Login() {
   const [loginState, setLoginState] = useState(fieldsState);
 
-  const handleChange = (e: React.ChangeEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setLoginState({ ...loginState, [e.target.id]: e.target.value });
   };
   const handleSubmit = (e: FormEvent) => {
@@ -25,13 +25,13 @@ export default function Login() {
   const authenticateUser = () => {};
 
   return (
-    <form className="mt-8 space-y-6 px-4 sm:px-8">
+    <form className="mt-8 space-y-6 px-4 sm:px-8 pb-5">
       <div className="-space-y-px">
         {fields.map((field) => (
           <Input
             key={field.id}
             handleChange={handleChange}
-            value={loginState[field.id]}
+            value={loginState[field.id as keyof typeof loginState]}
             labelText={field.labelText}
             labelFor={field.labelFor}
             id={field.id}
