@@ -7,12 +7,12 @@ import FormAction from "../formAction/formAction";
 
 const fields: LoginFields[] = loginFields;
 let fieldsState = {};
-fields.forEach((field) => (fieldsState[field.id] = ""));
+fields.forEach((field) => (fieldsState[field.name] = ""));
 // console.log({ fieldsState });
 
 export default function Login() {
   const [loginState, setLoginState] = useState(fieldsState);
-
+console.log({loginState})
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     console.log(e.target.name, e.target.value)
     setLoginState({ ...loginState, [e.target.name]: e.target.value });
@@ -32,7 +32,7 @@ export default function Login() {
           <Input
             key={field.id}
             handleChange={handleChange}
-            value={loginState[field.id as keyof typeof loginState]}
+            value={loginState[field.name as keyof typeof loginState]}
             labelText={field.labelText}
             labelFor={field.labelFor}
             id={field.id}
