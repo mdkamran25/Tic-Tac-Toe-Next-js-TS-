@@ -14,7 +14,8 @@ export default function Login() {
   const [loginState, setLoginState] = useState(fieldsState);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setLoginState({ ...loginState, [e.target.id]: e.target.value });
+    console.log(e.target.name, e.target.value)
+    setLoginState({ ...loginState, [e.target.name]: e.target.value });
   };
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();

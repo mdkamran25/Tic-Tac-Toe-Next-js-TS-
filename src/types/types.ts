@@ -29,3 +29,9 @@ interface InputProps extends LoginFields {
   value: string;
   customClass: string;
 }
+
+interface UserSchema {
+  name: string,
+  email:string,
+  password:string,
+}

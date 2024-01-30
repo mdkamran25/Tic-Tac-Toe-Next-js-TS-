@@ -1,19 +1,10 @@
 import Header from "@/components/header/header";
 import Login from "@/components/login/login";
-import Image from "next/image";
 
-export default function LoginPage() {
+export default function Dashboard() {
   return (
-    <div className="min-h-full h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 rounded-card-radius bg-card-primary py-5 ">
-        <Header
-          heading="Login to your account"
-          paragraph="Don't have an account yet? "
-          linkName="Signup"
-          linkUrl="/signup"
-        />
-        <Login />
-      </div>
+    <div className="w-screen h-screen flex items-center justify-center">
+      <h1 className="text-4xl font-bold">Welcome to dashboard</h1>
     </div>
   );
 }

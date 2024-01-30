@@ -10,7 +10,7 @@ const SignupPage = () => {
           heading="Create new account"
           paragraph="Already have an account? "
           linkName="Login"
-          linkUrl="/"
+          linkUrl="/login"
         />
         <Signup />
       </div>

@@ -11,7 +11,7 @@ const Signup = () => {
   const [signupState, setSignupState] = useState(fieldsState);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setSignupState({ ...signupState, [e.target.id]: e.target.value });
+    setSignupState({ ...signupState, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
