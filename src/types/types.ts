@@ -19,6 +19,7 @@ interface LoginFields {
 
 interface FormActionsProps{
   handleSubmit:(e:React.FormEvent)=>void,
+  loading: boolean, 
   buttonType:string,
   action:'submit',
   text:string
@@ -31,7 +32,7 @@ interface InputProps extends LoginFields {
 }
 
 interface UserSchema {
-  name: string,
+  username: string,
   email:string,
   password:string,
 }

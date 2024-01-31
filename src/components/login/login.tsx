@@ -6,15 +6,18 @@ import FormExtra from "../formExtra/formExtra";
 import FormAction from "../formAction/formAction";
 
 const fields: LoginFields[] = loginFields;
-let fieldsState = {};
+let fieldsState:Record<string, string> = {};
 fields.forEach((field) => (fieldsState[field.name] = ""));
 // console.log({ fieldsState });
 
 export default function Login() {
-  const [loginState, setLoginState] = useState(fieldsState);
+  const [loginState, setLoginState] = useState({
+    email:"",
+    password:"",
+  });
 console.log({loginState})
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    console.log(e.target.name, e.target.value)
+    // console.log(e.target.name, e.target.value)
     setLoginState({ ...loginState, [e.target.name]: e.target.value });
   };
   const handleSubmit = (e: FormEvent) => {

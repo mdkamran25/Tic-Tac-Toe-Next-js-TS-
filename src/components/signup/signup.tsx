@@ -1,18 +1,9 @@
-"use client"
+"use client";
 import { signupFields } from "@/constants/formFields";
 import React, { useState } from "react";
 import FormAction from "../formAction/formAction";
 import Input from "../input/input";
-
-interface LoginFields {
-  id: string;
-  name: string;
-  labelText: string;
-  labelFor: string;
-  type: string;
-  isRequired: boolean;
-  placeholder: string;
-}
+import { signup } from "@/constants/apiUrl";
 
 const fields: LoginFields[] = signupFields;
 let fieldsState: Record<string, string> = {};
@@ -20,36 +11,47 @@ fields.forEach((field) => (fieldsState[field.name] = ""));
 
 const Signup = () => {
   const [signupState, setSignupState] = useState(fieldsState);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [apiResponse, setApiResponse] = useState({
+    status: "",
+    message: "",
+  });
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setSignupState({ ...signupState, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch("api/signup", {
+      setLoading(true);
+      const res = await fetch(signup, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(signupState)
+        body: JSON.stringify(signupState),
       });
-
+      const data = await res.json();
       if (res.ok) {
-        const form = e.target as HTMLFormElement;
-        form.reset();
+        setApiResponse(data);
+        setSignupState(fieldsState);
+        setLoading(false);
       } else {
+        setApiResponse(data);
+        setLoading(false);
         throw new Error("Failed to create account");
       }
     } catch (error) {
-      console.error("Error creating account:", error);
+      setLoading(false);
+      console.error("Error creating account:", error?.message);
     }
   };
 
   return (
-    <form className="mt-8 space-y-6 px-4 sm:px-8 pb-5" onSubmit={handleSubmit}>
-      <div className="">
+    <form className="mt-8 px-4 sm:px-8 pb-5" onSubmit={handleSubmit}>
+      <div className=" space-y-6">
         {fields.map((field) => (
           <Input
             key={field.id}
@@ -65,7 +67,16 @@ const Signup = () => {
           />
         ))}
       </div>
-      <FormAction handleSubmit={handleSubmit} text="Signup" />
+      <FormAction handleSubmit={handleSubmit} text="Signup" loading={loading} />
+      {apiResponse?.message && (
+        <p
+          className={`m-1 font-medium text-md ${
+            apiResponse?.status ? "text-green-500" : "text-red-600"
+          }`}
+        >
+          {apiResponse?.message}
+        </p>
+      )}
     </form>
   );
 };
