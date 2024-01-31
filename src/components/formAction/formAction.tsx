@@ -1,6 +1,7 @@
 import LoadingButton from "../loadingButton/loadingButton";
 
 export default function FormAction({
+  apiResponse,
   handleSubmit,
   loading,
   buttonType = "Button",
@@ -24,6 +25,15 @@ export default function FormAction({
         </button>
       ) : (
         <></>
+      )}
+      {apiResponse?.message && (
+        <p
+          className={`m-1 font-medium text-md ${
+            apiResponse?.status ? "text-green-500" : "text-red-600"
+          }`}
+        >
+          {apiResponse?.message}
+        </p>
       )}
     </>
   );

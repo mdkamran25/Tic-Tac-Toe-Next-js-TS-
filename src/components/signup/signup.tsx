@@ -12,7 +12,7 @@ fields.forEach((field) => (fieldsState[field.name] = ""));
 const Signup = () => {
   const [signupState, setSignupState] = useState(fieldsState);
   const [loading, setLoading] = useState<boolean>(false);
-  const [apiResponse, setApiResponse] = useState({
+  const [apiResponse, setApiResponse] = useState<ApiResponse>({
     status: "",
     message: "",
   });
@@ -67,16 +67,7 @@ const Signup = () => {
           />
         ))}
       </div>
-      <FormAction handleSubmit={handleSubmit} text="Signup" loading={loading} />
-      {apiResponse?.message && (
-        <p
-          className={`m-1 font-medium text-md ${
-            apiResponse?.status ? "text-green-500" : "text-red-600"
-          }`}
-        >
-          {apiResponse?.message}
-        </p>
-      )}
+      <FormAction apiResponse={apiResponse} handleSubmit={handleSubmit} text="Signup" loading={loading} />    
     </form>
   );
 };

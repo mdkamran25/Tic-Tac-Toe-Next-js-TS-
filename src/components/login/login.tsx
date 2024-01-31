@@ -1,41 +1,73 @@
 "use client";
-import { FormEvent, useState } from "react";
+import { FormEvent, useReducer, useState } from "react";
 import Input from "../input/input";
 import { loginFields } from "@/constants/formFields";
 import FormExtra from "../formExtra/formExtra";
 import FormAction from "../formAction/formAction";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
+interface LoginState {
+  email: string;
+  password: string;
+}
 
 const fields: LoginFields[] = loginFields;
-let fieldsState:Record<string, string> = {};
-fields.forEach((field) => (fieldsState[field.name] = ""));
-// console.log({ fieldsState });
 
 export default function Login() {
-  const [loginState, setLoginState] = useState({
-    email:"",
-    password:"",
+  const [loginState, setLoginState] = useState<LoginState>({
+    email: "",
+    password: "",
   });
-console.log({loginState})
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    // console.log(e.target.name, e.target.value)
-    setLoginState({ ...loginState, [e.target.name]: e.target.value });
-  };
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    authenticateUser();
+
+  const router = useRouter();
+
+  const [loading, setLoading] = useState(false);
+  const [apiResponse, setApiResponse] = useState<ApiResponse>({
+    status: "",
+    message: "",
+  });
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setLoginState({ ...loginState, [name]: value });
   };
 
-  //Handle Login API Integration here
-  const authenticateUser = () => {};
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const res = await signIn("credentials", {
+        email: loginState?.email,
+        password: loginState?.password,
+        redirect: false,
+      });
+      console.log({ res });
+      if (res.error) {
+        setLoading(false);
+        setApiResponse({ message: res.error, status: res.ok });
+        return null;
+      } else {
+        setLoading(false);
+        setApiResponse({ message: "", status: res.ok });
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error("something went wrong: ", error.message);
+      return null;
+    }
+    router.push("/");
+  };
 
   return (
-    <form className="mt-8 space-y-6 px-4 sm:px-8 pb-5">
-      <div className="-space-y-px">
+    <form className="mt-8 px-4 sm:px-8 pb-5" onSubmit={handleSubmit}>
+      <div className="-space-y-px space-y-6">
         {fields.map((field) => (
           <Input
             key={field.id}
             handleChange={handleChange}
-            value={loginState[field.name as keyof typeof loginState]}
+            value={loginState[field.name as keyof LoginState]}
             labelText={field.labelText}
             labelFor={field.labelFor}
             id={field.id}
@@ -47,7 +79,12 @@ console.log({loginState})
         ))}
       </div>
       <FormExtra />
-      <FormAction handleSubmit={handleSubmit} text="Login" />
+      <FormAction
+        apiResponse={apiResponse}
+        handleSubmit={handleSubmit}
+        text="Login"
+        loading={loading}
+      />
     </form>
   );
 }
