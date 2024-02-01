@@ -1,10 +1,10 @@
 "use client";
-import { FormEvent, useReducer, useState } from "react";
+import { FormEvent, useEffect, useReducer, useState } from "react";
 import Input from "../input/input";
 import { loginFields } from "@/constants/formFields";
 import FormExtra from "../formExtra/formExtra";
 import FormAction from "../formAction/formAction";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 interface LoginState {
@@ -15,12 +15,21 @@ interface LoginState {
 const fields: LoginFields[] = loginFields;
 
 export default function Login() {
+  const router = useRouter();
+  const session = useSession();
+  console.log("session",{session})
+  useEffect(()=>{
+    console.log(session?.status)
+    if(session?.status === "authenticated"){
+      router.push('/')
+    }
+  },[session?.status])
   const [loginState, setLoginState] = useState<LoginState>({
     email: "",
     password: "",
   });
 
-  const router = useRouter();
+  
 
   const [loading, setLoading] = useState(false);
   const [apiResponse, setApiResponse] = useState<ApiResponse>({
@@ -49,7 +58,6 @@ export default function Login() {
         setApiResponse({ message: res.error, status: res.ok });
         return null;
       } else {
-        setLoading(false);
         setApiResponse({ message: "", status: res.ok });
       }
     } catch (error) {
