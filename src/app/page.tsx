@@ -13,7 +13,9 @@ export default async function Dashboard() {
   
   return (
     <div className="w-screen h-screen flex flex-col">
-      
+      <div className="ms-auto">
+        <ProfileModal />
+      </div>
 
       <h1 className="text-4xl font-bold">Welcome to dashboard</h1>
       {session && (
