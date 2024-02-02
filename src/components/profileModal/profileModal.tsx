@@ -10,7 +10,7 @@ const ProfileModal = () => {
   return (
     <div className="relative">
       <button
-        className="flex me-3 md:me-8 mt-3 md:mt-5 items-center justify-center w-10 h-10 rounded-full bg-gray-200"
+        className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200"
         onMouseEnter={() => setOpenModal(true)}
       >
         <Image

@@ -17,7 +17,6 @@ const fields: LoginFields[] = loginFields;
 export default function Login() {
   const router = useRouter();
   const session = useSession();
-  console.log("session",{session})
   useEffect(()=>{
     console.log(session?.status)
     if(session?.status === "authenticated"){
