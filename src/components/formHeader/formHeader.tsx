@@ -1,12 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import loginIcon from '../../../assets/loginIcon.png'
-export default function Header({
+
+export default function FormHeader({
   heading,
   paragraph,
-  linkName,
-  linkUrl = "#",
-}: HeaderProps) {
+  linkActions,
+}: FormHeaderProps) {
   return (
     <div className="mb-10">
       <div className="flex justify-center">
@@ -23,13 +23,18 @@ export default function Header({
       </h2>
       <p className="mt-2 text-center text-sm text-gray-600 mt-5">
         {paragraph}{" "}
+        {linkActions.map((action, index) => (
         <Link
-          href={linkUrl}
+        key={index}
+          href={action.url}
           className="font-medium text-purple-600 hover:text-purple-500"
         >
-          {linkName}
+          {action.title}
         </Link>
+        ))}
       </p>
     </div>
   );
 }
+
+

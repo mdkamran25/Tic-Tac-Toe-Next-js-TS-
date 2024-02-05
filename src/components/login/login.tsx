@@ -1,10 +1,10 @@
 "use client";
-import { FormEvent, useEffect, useReducer, useState } from "react";
+import { FormEvent, useState } from "react";
 import Input from "../input/input";
 import { loginFields } from "@/constants/formFields";
-import FormExtra from "../formExtra/formExtra";
+import FormAdditionalLinks from "../formAdditionalLinks/formAdditionalLinks";
 import FormAction from "../formAction/formAction";
-import { signIn, useSession } from "next-auth/react";
+import { SignInResponse, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 interface LoginState {
@@ -16,19 +16,10 @@ const fields: LoginFields[] = loginFields;
 
 export default function Login() {
   const router = useRouter();
-  const session = useSession();
-  useEffect(()=>{
-    console.log(session?.status)
-    if(session?.status === "authenticated"){
-      router.push('/')
-    }
-  },[session?.status])
   const [loginState, setLoginState] = useState<LoginState>({
     email: "",
     password: "",
   });
-
-  
 
   const [loading, setLoading] = useState(false);
   const [apiResponse, setApiResponse] = useState<ApiResponse>({
@@ -46,22 +37,24 @@ export default function Login() {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await signIn("credentials", {
+      const res: SignInResponse | undefined = await signIn("credentials", {
         email: loginState?.email,
         password: loginState?.password,
         redirect: false,
       });
-      console.log({ res });
-      if (res.error) {
+      if (res?.error) {
         setLoading(false);
         setApiResponse({ message: res.error, status: res.ok });
         return null;
       } else {
-        setApiResponse({ message: "", status: res.ok });
+        setApiResponse({ message: "", status: res?.ok! });
       }
     } catch (error) {
       setLoading(false);
-      console.error("something went wrong: ", error.message);
+      if (error instanceof Error) {
+        console.error("something went wrong: ", error.message);
+      }
+
       return null;
     }
     router.push("/");
@@ -85,7 +78,7 @@ export default function Login() {
           />
         ))}
       </div>
-      <FormExtra />
+      <FormAdditionalLinks />
       <FormAction
         apiResponse={apiResponse}
         handleSubmit={handleSubmit}

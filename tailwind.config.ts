@@ -8,11 +8,16 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors:{
-        "card-primary": "white"
+      boxShadow: {
+        "dashboard-card-shadow": "0px 0px 5px 1px rgb(211, 211, 211)",
       },
-      borderRadius:{
-        "card-radius": "0.75rem"
+      colors: {
+        "card-primary": "white",
+        "dashboard-card": "rgb(24,24,24)",
+      },
+      borderRadius: {
+        "card-radius": "0.75rem",
+        "dashboard-card": "20px",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

@@ -1,15 +1,16 @@
 import connectMongoDb from "../../../../utils/dbConnection";
-import User from "../../../../models/userModels";
+import User from "../../../../models/userModel";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
+
 export async function POST(req: Request) {
   try {
     await connectMongoDb();
     const { name, email, password } = await req.json();
-    console.log({ name, email, password })
-    const exists = await User.findOne({ $or: [{ email }] });
-    console.log({exists})
-    if (exists) {
+
+    const userExist = await User.findOne({ $or: [{ email }] });
+
+    if (userExist) {
       return NextResponse.json(
         { message: "User already exist", status: false },
         { status: 500 }
@@ -17,7 +18,6 @@ export async function POST(req: Request) {
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     await User.create({ name, email, password: hashedPassword });
-    console.log("user created");
     return NextResponse.json(
       { message: "User Registered...!!", status: true },
       { status: 201 }

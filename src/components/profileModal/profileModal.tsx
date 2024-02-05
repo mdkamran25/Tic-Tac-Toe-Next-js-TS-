@@ -1,9 +1,9 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import profileImage from "../../../assets/profileIcon.png";
 import { signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
+
 
 const ProfileModal = () => {
   const [openModal, setOpenModal] = useState(false);

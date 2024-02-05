@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function FormExtra(){
+export default function FormAdditionalLinks(){
     return(
         <div className="mx-1 mt-2 flex items-center justify-between ">
         <div className="flex items-center">

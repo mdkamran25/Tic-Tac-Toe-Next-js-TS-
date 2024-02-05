@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import User from "../../../../../models/userModels";
+import User from "../../../../../models/userModel";
 import connectMongoDb from "../../../../../utils/dbConnection";
 import { cookies } from "next/headers";
 
@@ -10,19 +10,19 @@ export async function GET(
   await connectMongoDb();
   const user = await User.findOne({ email: params?.email });
   const cookieStore = cookies();
-  const visited = cookieStore.get('visited');
+  const visited = cookieStore.get("visited");
 
-  if(visited){
+  if (visited) {
     return NextResponse.json(
-        { message: "User found", data: user, status: true, existingUser:true },
-        { status: 201 }
-      );
+      { message: "User found", data: user, status: true, existingUser: true },
+      { status: 201 }
+    );
   }
 
-  cookieStore.set("visited", "true")
- 
+  cookieStore.set("visited", "true");
+
   return NextResponse.json(
-    { message: "User found", data: user, status: true, existingUser:false },
+    { message: "User found", data: user, status: true, existingUser: false },
     { status: 201 }
   );
 }

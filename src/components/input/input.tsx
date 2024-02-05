@@ -21,6 +21,7 @@ export default function Input({
       <input
         onChange={handleChange}
         value={value}
+        size={6}
         id={id}
         name={name}
         type={type}

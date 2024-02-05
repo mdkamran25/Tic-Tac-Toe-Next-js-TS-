@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { getServerSession } from "next-auth";
-import AuthProvider from "../../utils/sessionProvider";
+import AuthProvider from "../components/authProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -10,16 +9,15 @@ export const metadata: Metadata = {
   description: "Tic Tac Toe Game developed using next.js + typescript",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AuthProvider session={session}>{children}</AuthProvider>
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );

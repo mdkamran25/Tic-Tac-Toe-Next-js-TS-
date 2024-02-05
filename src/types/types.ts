@@ -1,9 +1,8 @@
 
-interface HeaderProps {
+interface FormHeaderProps {
   heading: string;
   paragraph: string;
-  linkName: string;
-  linkUrl: string;
+  linkActions: Array<{title:string; url:string}>
 }
 
 interface LoginFields {
@@ -39,7 +38,7 @@ interface InputProps extends LoginFields {
 }
 
 interface UserSchema {
-  username: string,
+  name: string,
   email:string,
   password:string,
 }
@@ -52,3 +51,19 @@ interface Credentials{
     callbackUrl: string,
     json: string
 }
+
+interface UserResponseData {
+  message: string;
+  data: {
+    _id: string;
+    name: string;
+    email: string;
+    password: string;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+  };
+  status: boolean;
+  existingUser: boolean;
+}
+
