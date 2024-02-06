@@ -26,7 +26,6 @@ interface FormActionsProps{
   handleSubmit:(e:React.FormEvent)=>void,
   loading: boolean, 
   buttonType:string,
-  action:'submit',
   text:string
 }
 
@@ -67,3 +66,8 @@ interface UserResponseData {
   existingUser: boolean;
 }
 
+type PortalInterface = {
+  children: React.ReactNode;
+  show?: boolean;
+  selector: string;
+};
