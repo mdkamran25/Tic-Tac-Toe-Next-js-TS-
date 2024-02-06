@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import profileImage from "../../../assets/profileIcon.png";
+import profileImage from "../../../assets/profileIcon.svg";
+import whiteBgProfileIcon from '../../../assets/whiteBgProfileIcon.svg'
 import { signOut } from "next-auth/react";
 import PortalProvider from "../portalProvider/portalProvider";
 
@@ -30,7 +31,7 @@ const ProfileModal = () => {
           >
             <div className="px-4 pt-4 text-center">
               <Image
-                src={profileImage}
+                src={whiteBgProfileIcon}
                 width={80}
                 height={80}
                 className="rounded-full mx-auto"

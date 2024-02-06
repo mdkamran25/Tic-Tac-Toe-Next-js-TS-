@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import loginIcon from '../../../assets/loginIcon.png'
+import icon from '../../../assets/formHeaderIcon.svg'
 
 export default function FormHeader({
   heading,
@@ -15,7 +15,7 @@ export default function FormHeader({
           className="h-14 w-14"
           width={100}
           height={100}
-          src={loginIcon}
+          src={icon}
         />
       </div>
       <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
