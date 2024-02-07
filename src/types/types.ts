@@ -66,8 +66,24 @@ interface UserResponseData {
   existingUser: boolean;
 }
 
-type PortalInterface = {
+interface PortalInterface {
   children: React.ReactNode;
   show?: boolean;
   selector: string;
 };
+
+interface DashboardHeader {
+  headerMessage : string;
+}
+
+interface GameSchema {
+  roomCode: string;
+  board: string[];
+  turn: string;
+  winner: string | null;
+  status: boolean;
+  leftGame: {
+    playerX: boolean;
+    playerO: boolean;
+  };
+}

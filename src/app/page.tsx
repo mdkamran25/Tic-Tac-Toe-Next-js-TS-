@@ -9,6 +9,7 @@ import totalGame from "./../../assets/totalGame.svg";
 import lose from "./../../assets/lose.png";
 import draw from "./../../assets/draw.png";
 import StartGame from "@/components/startGame/startGame";
+import DashboardHeader from "@/components/dashboardHeader/dashboardHeader";
 
 export default async function Dashboard() {
   const session: Session | null = await getServerSession();
@@ -23,14 +24,7 @@ export default async function Dashboard() {
   return (
     <div className="w-screen h-screen flex flex-col">
       <div className="w-screen px-3 md:px-8 mt-3 md:mt-5 flex flex-row">
-        <div className="">
-          <h1 className="text-2xl font-sans italic font-medium text-gradient-to-r from-cyan-500 to-blue-500">
-            Welcome to online multiplayer Tic Tac Toe game
-          </h1>
-          <h2 className="w-fit text-gradient text-xl font-medium font-serif italic">
-            {resData?.data?.name}
-          </h2>
-        </div>
+        <DashboardHeader headerMessage={resData?.data?.name} />
         <div className="ms-auto">
           <ProfileModal />
         </div>

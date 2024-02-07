@@ -43,9 +43,11 @@ const Signup = () => {
         setLoading(false);
         throw new Error("Failed to create account");
       }
-    } catch (error) {
-      setLoading(false);
-      console.error("Error creating account:", error?.message);
+    } catch (error:unknown) {
+      if(error instanceof Error){
+        setLoading(false);
+        console.error("Error creating account:", error?.message);
+      }
     }
   };
 
