@@ -6,10 +6,10 @@ export async function POST(req: Request) {
   try {
     console.log("api");
     await connectMongoDb();
-    const { customRoomCode } = await req.json();
-    console.log({ customRoomCode });
+    const { game } = await req.json();
+    console.log(game);
     const roomExist = await Game.findOne({
-      $or: [{ roomCode: customRoomCode }],
+      $or: [{ roomCode: game.roomCode }],
     });
     console.log({ roomExist })
     if (roomExist) {
@@ -19,11 +19,10 @@ export async function POST(req: Request) {
       );
     }
 
-    await Game.create({ roomCode: customRoomCode });
+    await Game.create(game);
 
     return NextResponse.json({ message: "", status: true }, { status: 201 });
   } catch (error) {
-    console.log({error})
     return NextResponse.json(
       { message: "Error while creating Room", status: false },
       { status: 500 }

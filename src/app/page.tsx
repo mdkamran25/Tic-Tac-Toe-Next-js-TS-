@@ -60,7 +60,7 @@ export default async function Dashboard() {
         </DashboardCard>
       </div>
       <div className="w-screen pt-10 flex flex-col gap-3 justify-center items-center">
-        <StartGame />
+        <StartGame userData={resData} />
       </div>
     </div>
   );

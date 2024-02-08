@@ -1,32 +1,36 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema, Document } from "mongoose";
 
-interface GameModel extends Document, GameSchema {
-    playerX: { type: typeof Schema.Types.ObjectId; ref: string; required: boolean; };
-    playerO: {type: typeof Schema.Types.ObjectId; ref: string; };
+interface Game extends Document, GameSchema {
+  playerXId: {
+    type: typeof Schema.Types.ObjectId;
+    ref: string;
+    required: boolean;
+  };
+  playerOId: { type: typeof Schema.Types.ObjectId; ref: string };
 }
 
-const GameSchema: Schema = new Schema<GameModel>(
+const GameSchema: Schema<Game> = new Schema<Game>(
   {
     roomCode: {
       type: String,
       required: true,
     },
-    playerX: {
+    playerXId: {
       type: Schema.Types.ObjectId,
-      ref: 'User', 
+      ref: "User",
       required: true,
     },
-    playerO: {
+    playerOId: {
       type: Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
     },
     board: {
       type: [String],
-      default: ['', '', '', '', '', '', '', '', ''],
+      default: ["", "", "", "", "", "", "", "", ""],
     },
     turn: {
       type: String,
-      default: 'X',
+      default: "X",
     },
     winner: {
       type: String,
@@ -52,5 +56,7 @@ const GameSchema: Schema = new Schema<GameModel>(
   }
 );
 
-const Game = mongoose.model('Game', GameSchema);
+const Game =
+  mongoose.models.Game<Game> ||
+  mongoose.model<Game>("Game", GameSchema);
 export default Game;

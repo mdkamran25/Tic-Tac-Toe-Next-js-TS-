@@ -1,11 +1,14 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import LoadingButton from "../loadingButton/loadingButton";
 import Input from "../input/input";
-import { room } from "@/constants/apiUrl";
+import { joinRoom, room } from "@/constants/apiUrl";
+import { GameContext } from "@/context/gameContext";
 
-const StartGame = () => {
+const StartGame = ({ userData }: { userData: UserResponseData }) => {
+  const { game, setGame } = useContext(GameContext) as GameContextType;
+  console.log(game);
   const [loading, setLoading] = useState({
     createRoom: false,
     joinRoom: false,
@@ -22,21 +25,32 @@ const StartGame = () => {
     setLoading({ ...loading, createRoom: true });
 
     const customRoomCode = Math.random().toString().substring(2, 8);
-    // Perform API call to create a room at backend
+
+    setGame({
+      ...game,
+      roomCode: customRoomCode,
+      playerXId: userData.data._id,
+    });
+
     try {
+      console.log({ game });
       const res = await fetch(room, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(customRoomCode),
+        body: JSON.stringify({
+          game: {
+            ...game,
+            roomCode: customRoomCode,
+            playerXId: userData.data._id,
+          },
+        }),
       });
       const data = await res.json();
-      console.log({data})
       if (res.ok) {
         router.push(`/room/${customRoomCode}`);
       } else {
-        // setApiResponse(data);
         setLoading({ ...loading, createRoom: false });
         throw new Error("Failed to create account");
       }
@@ -48,12 +62,32 @@ const StartGame = () => {
     }
   };
 
-  const joinRoom = () => {
+  const handleJoinRoom = async () => {
     if (joinRoomCode && joinRoomCode.length === 6) {
-      //here I have to perform some API call to check that such room exist or not
       setLoading({ ...loading, joinRoom: true });
-      router.push(`/room/${joinRoomCode}`);
-      return;
+
+      try {
+        const res = await fetch(`${joinRoom}/${joinRoomCode}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            status: "true",
+            playerOId: userData.data._id,
+          }),
+        });
+
+        const resD = await res.json();
+        if (res.ok) {
+          router.push(`/room/${joinRoomCode}`);
+        }
+        setLoading({ ...loading, joinRoom: false });
+        console.log({ resD });
+      } catch (error) {
+        setLoading({ ...loading, joinRoom: false });
+        console.error(error);
+      }
     }
   };
 
@@ -87,7 +121,7 @@ const StartGame = () => {
         <div className="w-full">
           <button
             className="group mx-auto md:w-[10rem]  break-keep flex justify-center cursor-pointer py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-            onClick={joinRoom}
+            onClick={handleJoinRoom}
           >
             {loading.joinRoom ? <LoadingButton /> : "Join Room"}
           </button>

@@ -11,9 +11,9 @@ const Room = async () => {
   if (!session) {
     redirect("/");
   }
-  console.log({session})
+  // console.log({session})
   return (
-    <div className='flex flex-col  md:gap-20 h-screen w-screen'>
+    <div className='flex flex-col h-screen w-screen'>
       <div className="header pt-2 ps-2 md:p-5">
         <DashboardHeader headerMessage={session?.user?.name as string} />
       </div>

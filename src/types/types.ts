@@ -87,3 +87,25 @@ interface GameSchema {
     playerO: boolean;
   };
 }
+
+interface Game{
+  roomCode: string;
+  playerXId: string;
+  turn: string;
+  board: string[];
+  winner: string;
+  status: boolean;
+  leftGame: {
+      playerX: boolean;
+      playerO: boolean;
+  };
+}
+
+interface GameContextType{
+  game: Game;
+  setGame: (game: Game)=>void
+}
+
+interface JoinRoomApiParams{
+  roomCode: string;
+}
