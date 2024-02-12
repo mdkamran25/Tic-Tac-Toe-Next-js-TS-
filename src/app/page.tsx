@@ -1,4 +1,3 @@
-import ProfileModal from "@/components/profileModal/profileModal";
 import { user } from "@/constants/apiUrl";
 import { Session, getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -10,6 +9,7 @@ import lose from "./../../assets/lose.png";
 import draw from "./../../assets/draw.png";
 import StartGame from "@/components/startGame/startGame";
 import DashboardHeader from "@/components/dashboardHeader/dashboardHeader";
+import ProfileModal from "@/modal/profileModal";
 
 export default async function Dashboard() {
   const session: Session | null = await getServerSession();

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import User from "../../../../../models/userModel";
-import connectMongoDb from "../../../../../utils/dbConnection";
+import connectMongoDb from "../../../../utils/dbConnection";
 import { cookies } from "next/headers";
 
 export async function GET(

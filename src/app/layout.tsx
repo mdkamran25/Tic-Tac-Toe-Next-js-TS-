@@ -21,6 +21,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div id="profileModal" />
+        <div id="resultModal" />
         <AuthProvider session={session}>
           <GameContextProvider>{children}</GameContextProvider>
         </AuthProvider>

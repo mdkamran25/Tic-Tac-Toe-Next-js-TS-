@@ -6,36 +6,19 @@ export async function PATCH(
   req: Request,
   { params }: { params: JoinRoomApiParams }
 ) {
+  console.log("Update room Api is called")
   const { roomCode } = params;
   const game = await req.json();
-  const { playerOId, status } = game;
-
+  console.log({game}, roomCode);
   await connectMongoDb();
   try {
-    console.log("Join Room Api is called")
-    const roomExist = await Game.findOne({ roomCode });
-
-    if (!roomExist) {
-      return NextResponse.json(
-        { message: "No such room found...", status: false },
-        { status: 500 }
-      );
-    }
-
-    if (roomExist.playerOId && roomExist?.playerOId !== playerOId) {
-      return NextResponse.json(
-        { message: "Room is full...", status: false },
-        { status: 500 }
-      );
-    }
-
     const room = await Game.findOneAndUpdate(
       { roomCode },
-      { $set: { playerOId, status } },
+      { $set: { ...game } },
       { new: true }
     );
 
-    return NextResponse.json({ message: "", status: true }, { status: 200 });
+    return NextResponse.json({ message: "Game Updated", data: room, status: true }, { status: 200 });
   } catch (error) {
     if (error instanceof Error)
       return NextResponse.json(

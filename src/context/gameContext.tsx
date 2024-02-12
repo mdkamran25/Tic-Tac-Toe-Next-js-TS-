@@ -7,8 +7,8 @@ const GameContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [game, setGame] = useState<Game>({
     roomCode: "",
     playerXId: "",
-    turn: "",
-    board: ["", "", "", "", "", "", "", "", ""],
+    turn: "X",
+    board: Array(9).fill(null),
     winner: "",
     status: false,
     leftGame: { playerX: false, playerO: false },

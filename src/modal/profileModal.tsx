@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import profileImage from "../../../assets/profileIcon.svg";
-import whiteBgProfileIcon from '../../../assets/whiteBgProfileIcon.svg'
+import profileImage from "../../assets/profileIcon.svg";
+import whiteBgProfileIcon from '../../assets/whiteBgProfileIcon.svg'
 import { signOut } from "next-auth/react";
-import PortalProvider from "../portalProvider/portalProvider";
+import PortalProvider from "../components/portalProvider/portalProvider";
 
 const ProfileModal = () => {
   const [openModal, setOpenModal] = useState(false);

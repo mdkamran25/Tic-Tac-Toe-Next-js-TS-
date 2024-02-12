@@ -1,8 +1,7 @@
-
 interface FormHeaderProps {
   heading: string;
   paragraph: string;
-  linkActions: Array<{title:string; url:string}>
+  linkActions: Array<{ title: string; url: string }>;
 }
 
 interface LoginFields {
@@ -16,52 +15,55 @@ interface LoginFields {
   placeholder: string;
 }
 
-interface ApiResponse{
-  message:string,
-  status: boolean | string
+interface ApiResponse {
+  message: string;
+  status: boolean | string;
 }
 
-interface FormActionsProps{
-  apiResponse: ApiResponse
-  handleSubmit:(e:React.FormEvent)=>void,
-  loading: boolean, 
-  buttonType:string,
-  text:string
+interface FormActionsProps {
+  apiResponse: ApiResponse;
+  handleSubmit: (e: React.FormEvent) => void;
+  loading: boolean;
+  buttonType: string;
+  text: string;
 }
-
 
 interface InputProps extends LoginFields {
-  handleChange: (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  handleChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
   value: string;
   customClass: string;
 }
 
 interface UserSchema {
-  name: string,
-  email:string,
-  password:string,
+  name: string;
+  email: string;
+  password: string;
 }
 
-interface Credentials{
-    email:string,
-    password: string,
-    redirect: string,
-    csrfToken: string,
-    callbackUrl: string,
-    json: string
+interface Credentials {
+  email: string;
+  password: string;
+  redirect: string;
+  csrfToken: string;
+  callbackUrl: string;
+  json: string;
 }
+
+interface UserData {
+  _id: string;
+  name: string;
+  email: string;
+  password: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};
 
 interface UserResponseData {
   message: string;
-  data: {
-    _id: string;
-    name: string;
-    email: string;
-    password: string;
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
-  };
+  data: UserData
   status: boolean;
   existingUser: boolean;
 }
@@ -70,10 +72,10 @@ interface PortalInterface {
   children: React.ReactNode;
   show?: boolean;
   selector: string;
-};
+}
 
 interface DashboardHeader {
-  headerMessage : string;
+  headerMessage: string;
 }
 
 interface GameSchema {
@@ -88,24 +90,48 @@ interface GameSchema {
   };
 }
 
-interface Game{
+interface Game {
   roomCode: string;
-  playerXId: string;
+  playerXId: UserData | string;
   turn: string;
   board: string[];
   winner: string;
   status: boolean;
   leftGame: {
-      playerX: boolean;
-      playerO: boolean;
+    playerX: boolean;
+    playerO: boolean;
   };
+  playerOId?: UserData | string;
 }
 
-interface GameContextType{
+interface GameContextType {
   game: Game;
-  setGame: (game: Game)=>void
+  setGame: (game: Game) => void;
 }
 
-interface JoinRoomApiParams{
+interface JoinRoomApiParams {
   roomCode: string;
+}
+
+interface Session {
+  name?: string | null | undefined;
+  email?: string | null | undefined;
+  image?: string | null | undefined;
+}
+
+interface SquaresProps {
+  i: number;
+  roomData: Game;
+}
+
+interface SquareProps {
+  value: JSX.Element | null;
+  i: number;
+  session: Session | undefined;
+  roomData: Game;
+}
+
+interface WindowSize {
+  width: number | undefined;
+  height: number | undefined;
 }

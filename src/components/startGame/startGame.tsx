@@ -5,15 +5,18 @@ import LoadingButton from "../loadingButton/loadingButton";
 import Input from "../input/input";
 import { joinRoom, room } from "@/constants/apiUrl";
 import { GameContext } from "@/context/gameContext";
+import ToastConainer from "../toastConainer";
+import { showErrorToast } from "../../utils/toast";
 
 const StartGame = ({ userData }: { userData: UserResponseData }) => {
   const { game, setGame } = useContext(GameContext) as GameContextType;
-  console.log(game);
+
   const [loading, setLoading] = useState({
     createRoom: false,
     joinRoom: false,
   });
   const [joinRoomCode, setJoinRoomCode] = useState<string>("");
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -23,49 +26,48 @@ const StartGame = ({ userData }: { userData: UserResponseData }) => {
 
   const createRoom = async () => {
     setLoading({ ...loading, createRoom: true });
-
-    const customRoomCode = Math.random().toString().substring(2, 8);
-
-    setGame({
-      ...game,
-      roomCode: customRoomCode,
-      playerXId: userData.data._id,
-    });
-
+  
     try {
-      console.log({ game });
+      const customRoomCode = Math.random().toString().substring(2, 8);
+  
+      const newGame = {
+        roomCode: customRoomCode,
+        playerXId: userData.data._id,
+      };
+  
       const res = await fetch(room, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          game: {
-            ...game,
-            roomCode: customRoomCode,
-            playerXId: userData.data._id,
-          },
-        }),
+        body: JSON.stringify({ game: newGame }),
       });
+  
       const data = await res.json();
       if (res.ok) {
         router.push(`/room/${customRoomCode}`);
       } else {
+        showErrorToast(data.message);
         setLoading({ ...loading, createRoom: false });
-        throw new Error("Failed to create account");
+        throw new Error("Failed to create room");
       }
-    } catch (error: unknown) {
+    } catch (error) {
+      setLoading({ ...loading, createRoom: false });
       if (error instanceof Error) {
-        setLoading({ ...loading, createRoom: false });
-        console.error("Error creating account:", error?.message);
+        console.error("Error creating room:", error.message);
       }
     }
   };
+  
 
   const handleJoinRoom = async () => {
     if (joinRoomCode && joinRoomCode.length === 6) {
       setLoading({ ...loading, joinRoom: true });
-
+      setGame({
+        ...game,
+        status: true,
+        playerOId: userData.data._id,
+      });
       try {
         const res = await fetch(`${joinRoom}/${joinRoomCode}`, {
           method: "PATCH",
@@ -78,15 +80,18 @@ const StartGame = ({ userData }: { userData: UserResponseData }) => {
           }),
         });
 
-        const resD = await res.json();
+        const data = await res.json();
         if (res.ok) {
           router.push(`/room/${joinRoomCode}`);
         }
+        showErrorToast(data.message);
         setLoading({ ...loading, joinRoom: false });
-        console.log({ resD });
+        console.log({ data });
       } catch (error) {
         setLoading({ ...loading, joinRoom: false });
-        console.error(error);
+        if (error instanceof Error) {
+          console.error(error.message);
+        }
       }
     }
   };
@@ -103,7 +108,7 @@ const StartGame = ({ userData }: { userData: UserResponseData }) => {
         </button>
       </div>
       <div className="flex flex-col px-2 w-full md:w-[20rem] justify-center items-center">
-        <div className="w-[15rem] md:w-full">
+        <div className="w-[15rem] md:w-full relative">
           <Input
             key={"joinRoom"}
             handleChange={handleChange}
@@ -127,6 +132,7 @@ const StartGame = ({ userData }: { userData: UserResponseData }) => {
           </button>
         </div>
       </div>
+      <ToastConainer />
     </>
   );
 };

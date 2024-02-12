@@ -1,6 +1,6 @@
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
-import connectMongoDb from "../../../../../utils/dbConnection";
+import connectMongoDb from "../../../../utils/dbConnection";
 import User from "../../../../../models/userModel";
 import bcrypt from "bcrypt";
 import { Document } from "mongoose";

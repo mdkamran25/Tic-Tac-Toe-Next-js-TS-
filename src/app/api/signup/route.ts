@@ -1,4 +1,4 @@
-import connectMongoDb from "../../../../utils/dbConnection";
+import connectMongoDb from "../../../utils/dbConnection";
 import User from "../../../../models/userModel";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";

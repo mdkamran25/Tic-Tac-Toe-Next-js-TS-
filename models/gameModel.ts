@@ -9,6 +9,7 @@ interface Game extends Document, GameSchema {
   playerOId: { type: typeof Schema.Types.ObjectId; ref: string };
 }
 
+
 const GameSchema: Schema<Game> = new Schema<Game>(
   {
     roomCode: {
@@ -56,7 +57,6 @@ const GameSchema: Schema<Game> = new Schema<Game>(
   }
 );
 
-const Game =
-  mongoose.models.Game<Game> ||
-  mongoose.model<Game>("Game", GameSchema);
-export default Game;
+const GameModel =
+  mongoose.models.Game || mongoose.model<Game>("Game", GameSchema);
+export default GameModel;

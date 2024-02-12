@@ -7,3 +7,7 @@ export const user = `${process.env.NEXT_PUBLIC_BASE_URL}/api/user`
 export const room = `${process.env.NEXT_PUBLIC_BASE_URL}/api/createRoom`
 
 export const joinRoom = `${process.env.NEXT_PUBLIC_BASE_URL}/api/joinRoom`
+
+export const getRoom = `${process.env.NEXT_PUBLIC_BASE_URL}/api/getRoom`
+
+export const updateRoom = `${process.env.NEXT_PUBLIC_BASE_URL}/api/updateRoom`
