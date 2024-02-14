@@ -9,7 +9,7 @@ export async function PATCH(
   console.log("Update room Api is called")
   const { roomCode } = params;
   const game = await req.json();
-  console.log({game}, roomCode);
+  // console.log({game}, roomCode);
   await connectMongoDb();
   try {
     const room = await Game.findOneAndUpdate(
@@ -19,6 +19,7 @@ export async function PATCH(
     );
 
     return NextResponse.json({ message: "Game Updated", data: room, status: true }, { status: 200 });
+    
   } catch (error) {
     if (error instanceof Error)
       return NextResponse.json(

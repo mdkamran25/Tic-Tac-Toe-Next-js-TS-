@@ -9,7 +9,7 @@ import lose from "./../../assets/lose.png";
 import draw from "./../../assets/draw.png";
 import StartGame from "@/components/startGame/startGame";
 import DashboardHeader from "@/components/dashboardHeader/dashboardHeader";
-import ProfileModal from "@/modal/profileModal";
+import ProfileModal from "@/modals/profileModal";
 
 export default async function Dashboard() {
   const session: Session | null = await getServerSession();
@@ -19,7 +19,7 @@ export default async function Dashboard() {
   }
 
   const res = await fetch(`${user}/${session?.user?.email}`);
-  const resData = await res.json() as UserResponseData;
+  const resData = (await res.json()) as UserResponseData;
 
   return (
     <div className="w-screen h-screen flex flex-col">

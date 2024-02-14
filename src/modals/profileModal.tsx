@@ -27,7 +27,7 @@ const ProfileModal = () => {
         {
           <div
             onMouseLeave={() => setOpenModal(false)}
-            className="absolute top-12 right-0 me-1 md:me-2 mt-2 w-48 bg-white rounded shadow-md z-10 flex flex-col items-center justify-center"
+            className="absolute top-[3.5rem] right-0 me-1 md:me-2 mt-2 w-48 bg-white rounded shadow-md z-10 flex flex-col items-center justify-center"
           >
             <div className="px-4 pt-4 text-center">
               <Image

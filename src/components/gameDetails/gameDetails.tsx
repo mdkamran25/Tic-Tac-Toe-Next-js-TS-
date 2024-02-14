@@ -5,8 +5,8 @@ import { checkGameStatus } from "@/utils/checkGameStatus";
 import { checkOpponent } from "@/utils/checkOpponent";
 import { GameContext } from "@/context/gameContext";
 import { useSession } from "next-auth/react";
-import ReactConfetti from "@/modal/react-confetti";
-import ResultModal from "@/modal/resultModal";
+import ReactConfetti from "@/modals/react-confetti";
+import ResultModal from "@/modals/resultModal";
 
 const GameDetails = ({ roomData }: { roomData: Game }) => {
   const { data: session, status: sessionStatus } = useSession();
@@ -47,9 +47,7 @@ const GameDetails = ({ roomData }: { roomData: Game }) => {
         </div>
       </DashboardCard>
       {(status === "You Won" || status === "You Lose") && (
-        <ReactConfetti status={status}>
-          <ResultModal status={status} />
-        </ReactConfetti>
+        <ReactConfetti status={status} />
       )}
     </>
   );

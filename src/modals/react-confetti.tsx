@@ -1,13 +1,13 @@
 import React from "react";
 import Confetti from "react-confetti";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import ResultModal from "./resultModal";
 
 interface ReactConfettiProps {
-  children?: React.ReactNode;
   status:string;
 }
 
-const ReactConfetti: React.FC<ReactConfettiProps> = ({ status, children }) => {
+const ReactConfetti: React.FC<ReactConfettiProps> = ({ status }) => {
   const { width, height } = useWindowSize();
 
   return (
@@ -24,7 +24,7 @@ const ReactConfetti: React.FC<ReactConfettiProps> = ({ status, children }) => {
       }}
     >
       {status==="You Won" && <Confetti width={width} height={height} />}
-      {children}
+      <ResultModal status={status} />
     </div>
   );
 };

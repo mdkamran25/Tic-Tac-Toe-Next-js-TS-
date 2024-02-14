@@ -4,12 +4,14 @@ import React, { useState } from "react";
 import FormAction from "../formAction/formAction";
 import Input from "../input/input";
 import { signup } from "@/constants/apiUrl";
+import { useRouter } from "next/navigation";
 
 const fields: LoginFields[] = signupFields;
 let fieldsState: Record<string, string> = {};
 fields.forEach((field) => (fieldsState[field.name] = ""));
 
 const Signup = () => {
+  const router = useRouter();
   const [signupState, setSignupState] = useState(fieldsState);
   const [loading, setLoading] = useState<boolean>(false);
   const [apiResponse, setApiResponse] = useState<ApiResponse>({
@@ -37,6 +39,7 @@ const Signup = () => {
       if (res.ok) {
         setApiResponse(data);
         setSignupState(fieldsState);
+        router.push("/login")
         setLoading(false);
       } else {
         setApiResponse(data);
