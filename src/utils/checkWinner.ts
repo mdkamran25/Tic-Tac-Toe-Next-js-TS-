@@ -1,4 +1,4 @@
-export const checkWinner = (board) => {
+export const checkWinner = (board: string[]) => {
     
     const winningCombos = [
       [0, 1, 2], [3, 4, 5], [6, 7, 8], 
@@ -11,6 +11,9 @@ export const checkWinner = (board) => {
       if (board[a] && board[a] === board[b] && board[a] === board[c]) {
         return board[a];
       }
+    }
+    if(board.every((square) => square === "X" || square === "O")){
+      return "Match Draw";
     }
   
     return null;

@@ -46,7 +46,7 @@ const GameDetails = ({ roomData }: { roomData: Game }) => {
           </p>
         </div>
       </DashboardCard>
-      {(status === "You Won" || status === "You Lose") && (
+      {(status === "You Won" || status === "You Lose" || status==="Match Draw" ) && (
         <ReactConfetti status={status} />
       )}
     </>
