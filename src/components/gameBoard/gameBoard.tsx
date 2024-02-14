@@ -5,7 +5,7 @@ import Turn from "../turn/turn";
 import { GameContext } from "@/context/gameContext";
 
 const GameBoard = ({ roomData }: { roomData: Game }) => {
-  const { game, setGame } = useContext(GameContext) as GameContextType;
+  const { setGame } = useContext(GameContext) as GameContextType;
 
   useEffect(()=>{
     setGame({
@@ -13,7 +13,6 @@ const GameBoard = ({ roomData }: { roomData: Game }) => {
     })
   },[roomData])
 
-  // console.log({game},{roomData})
   return (
     <div>
       <div className="board">
@@ -22,19 +21,19 @@ const GameBoard = ({ roomData }: { roomData: Game }) => {
         </div>
         <div className="board-row">
           {[0, 1, 2].map((i) => (
-            <Squares key={i} roomData={roomData} i={i} />
+            <Squares key={i} i={i} />
           ))}
         </div>
 
         <div className="board-row">
           {[3, 4, 5].map((i) => (
-            <Squares key={i} roomData={roomData} i={i} />
+            <Squares key={i} i={i} />
           ))}
         </div>
 
         <div className="board-row">
           {[6, 7, 8].map((i) => (
-            <Squares key={i} roomData={roomData} i={i} />
+            <Squares key={i} i={i} />
           ))}
         </div>
       </div>

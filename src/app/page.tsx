@@ -17,7 +17,7 @@ export default async function Dashboard() {
   if (!session) {
     redirect("/login");
   }
-
+  
   const res = await fetch(`${user}/${session?.user?.email}`);
   const resData = (await res.json()) as UserResponseData;
 

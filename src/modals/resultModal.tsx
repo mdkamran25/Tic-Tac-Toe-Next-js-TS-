@@ -27,17 +27,17 @@ const ResultModal = ({ status }: { status: string }) => {
         className="bg-white rounded shadow-md z-10 flex flex-col items-center justify-center"
       >
         <div className="absolute top-2 right-2">
-          <button className="text-gray-700 hover:text-gray-900" onClick={closeModal}>
-            <Image src={closeIcon} alt="Cross Icon" width={20} height={20} />          </button>
-        </div>
-        <div className="px-4 pt-4 text-center">
-          <p className="font-semibold text-black text-2xl pt-1">{status}</p>
-        </div>
-        <div className="border-t border-gray-200 pt-2 pb-4">
-          <button className="text-sm text-gray-700 hover:text-gray-900" onClick={closeModal}>
-            Close
+          <button
+            className="text-gray-700 hover:text-gray-900"
+            onClick={closeModal}
+          >
+            <Image src={closeIcon} alt="Cross Icon" width={20} height={20} />{" "}
           </button>
         </div>
+
+        <p className="text-center font-semibold text-black text-2xl pt-1">
+          {status}
+        </p>
       </div>
     </PortalProvider>
   );

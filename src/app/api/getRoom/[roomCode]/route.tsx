@@ -14,6 +14,13 @@ export async function GET(
     const room = await Game.findOne({ roomCode })
       .populate("playerXId")
       .populate("playerOId");
+    
+      if(!room){
+        return NextResponse.json(
+          { message: "Room Not found", data: null, status: false },
+          { status: 500 }
+        );
+      }
       
     return NextResponse.json(
       { message: "Room found", data: room, status: true },

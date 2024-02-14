@@ -6,7 +6,6 @@ import { checkOpponent } from "@/utils/checkOpponent";
 import { GameContext } from "@/context/gameContext";
 import { useSession } from "next-auth/react";
 import ReactConfetti from "@/modals/react-confetti";
-import ResultModal from "@/modals/resultModal";
 
 const GameDetails = ({ roomData }: { roomData: Game }) => {
   const { data: session, status: sessionStatus } = useSession();

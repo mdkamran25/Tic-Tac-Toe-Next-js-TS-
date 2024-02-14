@@ -12,10 +12,13 @@ const Room = async ({params}:{params:{roomCode:string}}) => {
   if (!session) {
     redirect("/");
   }
-
-  console.log("page renders")
   
-  const room = await fetch(`${getRoom}/${roomCode}`) ;
+  const room = await fetch(`${getRoom}/${roomCode}`);
+  
+  if(!room.ok){
+    redirect("/");
+  }
+
   const data = await room.json();
   const roomData = data?.data  as Game;
   
