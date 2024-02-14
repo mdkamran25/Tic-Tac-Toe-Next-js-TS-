@@ -91,6 +91,7 @@ interface GameSchema {
 }
 
 interface Game {
+  _id?:string;
   roomCode: string;
   playerXId: UserData | string;
   turn: string;
@@ -121,17 +122,24 @@ interface Session {
 
 interface SquaresProps {
   i: number;
-  roomData: Game;
 }
 
 interface SquareProps {
   value: JSX.Element | null;
   i: number;
   session: Session | undefined;
-  roomData: Game;
 }
 
 interface WindowSize {
   width: number | undefined;
   height: number | undefined;
+}
+
+interface ResultSchema {
+  gameStatus: string;
+  player: {
+    x:string|null;
+    o:string|null;
+  }
+  winner:string|null;
 }
