@@ -32,7 +32,7 @@ const Room = async ({ params }: { params: { roomCode: string } }) => {
           <GameBoard roomData={roomData} />
         </div>
         <div className="w-full h-full flex justify-center md:justify-start md:pt-[9rem] xl:pt-[5rem] items-center">
-          <GameDetails roomData={roomData}  roomCode={roomCode} />
+          <GameDetails roomCode={roomCode} />
         </div>
       </div>
     </div>

@@ -16,6 +16,7 @@ export async function handleGameEnd(
       board: updatedBoard,
       turn: updatedTurn,
       winner: winner,
+      roomCode: game.roomCode,
     });
     
   try {

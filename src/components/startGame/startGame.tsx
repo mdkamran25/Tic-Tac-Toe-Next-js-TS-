@@ -48,6 +48,7 @@ const StartGame = ({ userData }: { userData: UserResponseData }) => {
   
       const data = await res.json();
       if (res.ok) {
+        socket.emit("joinSocketChannel", customRoomCode)
         router.push(`/room/${customRoomCode}`);
       } else {
         showErrorToast(data.message);
@@ -88,9 +89,12 @@ const StartGame = ({ userData }: { userData: UserResponseData }) => {
           setLoading({ ...loading, joinRoom: false });
           return;
         }
+        socket.emit("joinSocketChannel", joinRoomCode)
+
         socket.emit("joinGame", {
           status: true,
-          playerOId: userData.data._id,
+          playerOId: userData.data,
+          roomCode: joinRoomCode,
         });
         router.push(`/room/${joinRoomCode}`);
       } catch (error) {

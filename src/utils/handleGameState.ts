@@ -10,7 +10,7 @@ export async function handleGameState(
   updatedTurn: string
 ) {
   try {
-    socket.emit("updateGame", { board: updatedBoard, turn: updatedTurn });
+    socket.emit("updateGame", { board: updatedBoard, turn: updatedTurn, roomCode:game.roomCode });
 
     const res = await fetch(`${updateRoom}/${game?.roomCode}`, {
       method: "PATCH",
