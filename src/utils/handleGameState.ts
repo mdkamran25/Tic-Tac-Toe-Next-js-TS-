@@ -10,7 +10,6 @@ export async function handleGameState(
   updatedTurn: string
 ) {
   try {
-    // Emit updated game data to server
     socket.emit("updateGame", { board: updatedBoard, turn: updatedTurn });
 
     const res = await fetch(`${updateRoom}/${game?.roomCode}`, {

@@ -1,4 +1,7 @@
 import { createResult, updateRoom } from "@/constants/apiUrl";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:8000");
 
 export async function handleGameEnd(
   game: Game,
@@ -9,8 +12,7 @@ export async function handleGameEnd(
 ) {
   console.log("Handle Game End");
   if (winner)
-    setGame({
-      ...game,
+    socket.emit("updateGame", {
       board: updatedBoard,
       turn: updatedTurn,
       winner: winner,

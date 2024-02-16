@@ -60,8 +60,7 @@ const StartGame = ({ userData }: { userData: UserResponseData }) => {
         console.error("Error creating room:", error.message);
       }
     }
-  };
-  
+  };  
 
   const handleJoinRoom = async () => {
     if (joinRoomCode && joinRoomCode.length === 6) {
@@ -84,15 +83,16 @@ const StartGame = ({ userData }: { userData: UserResponseData }) => {
         });
 
         const data = await res.json();
-        if (res.ok) {
-          socket.emit("joinGame", {
-            status: true,
-            playerOId: userData.data._id,
-          })
-          router.push(`/room/${joinRoomCode}`);
+        if (!res.ok) {
+          showErrorToast(data.message);
+          setLoading({ ...loading, joinRoom: false });
+          return;
         }
-        showErrorToast(data.message);
-        setLoading({ ...loading, joinRoom: false });
+        socket.emit("joinGame", {
+          status: true,
+          playerOId: userData.data._id,
+        });
+        router.push(`/room/${joinRoomCode}`);
       } catch (error) {
         setLoading({ ...loading, joinRoom: false });
         if (error instanceof Error) {
