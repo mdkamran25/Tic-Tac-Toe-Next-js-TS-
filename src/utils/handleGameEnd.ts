@@ -48,7 +48,7 @@ export async function handleGameEnd(
       body: JSON.stringify({
         result: {
           gameId: game._id,
-          gameStatus: game?.winner ? "Completed" : "Incompleted",
+          gameStatus: winner ? "Completed" : "Incompleted",
           player: {
             x: (game.playerXId as UserData)._id,
             o: (game.playerOId as UserData)._id,

@@ -6,38 +6,35 @@ import { Session, getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import React from "react";
 
-const Room = async ({params}:{params:{roomCode:string}}) => {
+
+const Room = async ({ params }: { params: { roomCode: string } }) => {
   const session: Session | null = await getServerSession();
-  const {roomCode} = params;
+  const { roomCode } = params;
   if (!session) {
     redirect("/");
   }
-  
+
   const room = await fetch(`${getRoom}/${roomCode}`);
-  
-  if(!room.ok){
+  const data = await room.json();
+  const roomData = data?.data as Game;
+
+  if (!room.ok) {
     redirect("/");
   }
 
-  const data = await room.json();
-  const roomData = data?.data  as Game;
-  
-  
   return (
-    <div className='flex flex-col h-screen w-screen'>
+    <div className="flex flex-col h-screen w-screen">
       <div className="header pt-2 ps-2 md:p-5">
         <DashboardHeader headerMessage={session?.user?.name as string} />
       </div>
       <div className="flex flex-col-reverse md:flex-row md:gap-[3rem] xl:gap-[10rem] w-screen items-center justify-center">
-      <div className='w-full flex justify-center md:justify-end items-center'>
-            <GameBoard roomData={roomData}  />
+        <div className="w-full flex justify-center md:justify-end items-center">
+          <GameBoard roomData={roomData} />
         </div>
-        <div className='w-full h-full flex justify-center md:justify-start md:pt-[9rem] xl:pt-[5rem] items-center'>
-            <GameDetails roomData={roomData} />
+        <div className="w-full h-full flex justify-center md:justify-start md:pt-[9rem] xl:pt-[5rem] items-center">
+          <GameDetails roomData={roomData}  roomCode={roomCode} />
         </div>
       </div>
-        
-      
     </div>
   );
 };

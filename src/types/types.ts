@@ -59,11 +59,11 @@ interface UserData {
   createdAt: string;
   updatedAt: string;
   __v: number;
-};
+}
 
 interface UserResponseData {
   message: string;
-  data: UserData
+  data: UserData;
   status: boolean;
   existingUser: boolean;
 }
@@ -91,7 +91,7 @@ interface GameSchema {
 }
 
 interface Game {
-  _id?:string;
+  _id?: string;
   roomCode: string;
   playerXId: UserData | string;
   turn: string;
@@ -138,8 +138,20 @@ interface WindowSize {
 interface ResultSchema {
   gameStatus: string;
   player: {
-    x:string|null;
-    o:string|null;
-  }
-  winner:string|null;
+    x: string | null;
+    o: string | null;
+  };
+  winner: string | null;
+}
+
+interface ResultResponse {
+  message: string;
+  data: {
+    _id: null;
+    totalGames: number;
+    totalWins: number;
+    totalLosses: number;
+    totalDraws: number;
+  };
+  status: boolean;
 }

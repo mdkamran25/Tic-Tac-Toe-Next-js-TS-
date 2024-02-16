@@ -7,6 +7,9 @@ import { joinRoom, room } from "@/constants/apiUrl";
 import { GameContext } from "@/context/gameContext";
 import ToastConainer from "../toastConainer";
 import { showErrorToast } from "../../utils/toast";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:8000");
 
 const StartGame = ({ userData }: { userData: UserResponseData }) => {
   const { game, setGame } = useContext(GameContext) as GameContextType;
@@ -82,11 +85,14 @@ const StartGame = ({ userData }: { userData: UserResponseData }) => {
 
         const data = await res.json();
         if (res.ok) {
+          socket.emit("joinGame", {
+            status: true,
+            playerOId: userData.data._id,
+          })
           router.push(`/room/${joinRoomCode}`);
         }
         showErrorToast(data.message);
         setLoading({ ...loading, joinRoom: false });
-        console.log({ data });
       } catch (error) {
         setLoading({ ...loading, joinRoom: false });
         if (error instanceof Error) {

@@ -5,7 +5,6 @@ import { XIcon } from "../xIcon/xIcon";
 import { GameContext } from "@/context/gameContext";
 import { checkTurn } from "@/utils/checkCurrentTurn";
 import { useSession } from "next-auth/react";
-import { updateRoom } from "@/constants/apiUrl";
 import { checkWinner } from "@/utils/checkWinner";
 import { handleGameState } from "@/utils/handleGameState";
 import { handleGameEnd } from "@/utils/handleGameEnd";
