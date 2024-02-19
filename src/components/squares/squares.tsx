@@ -8,16 +8,14 @@ import { useSession } from "next-auth/react";
 import { checkWinner } from "@/utils/checkWinner";
 import { handleGameState } from "@/utils/handleGameState";
 import { handleGameEnd } from "@/utils/handleGameEnd";
-import { io } from "socket.io-client";
-
-const socket = io("http://localhost:8000");
+import socket from "@/utils/socket";
 
 function Square({ value, i, session }: SquareProps) {
   const { game, setGame } = useContext(GameContext) as GameContextType;
   
   useEffect(()=>{
     socket.on("recieveUpdateGameData", (data) => {
-      console.log("Recieved Game Data")
+
       setGame({
         ...game,
         ...data,
@@ -62,7 +60,6 @@ const Squares = ({ i }: SquaresProps) => {
 
   const value =
     game.board[i] === "X" ? <XIcon /> : game.board[i] === "O" ? <OIcon /> : null;
-    // console.log("draw:",game.board.every((square) => square === "X" || square === "O") && !game.winner)
   return (
     <Square
       value={value}

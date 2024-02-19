@@ -6,10 +6,8 @@ import { checkOpponent } from "@/utils/checkOpponent";
 import { GameContext } from "@/context/gameContext";
 import { useSession } from "next-auth/react";
 import ReactConfetti from "@/modals/react-confetti";
-import { io } from "socket.io-client";
 import { getRoom } from "@/constants/apiUrl";
-
-const socket = io("http://localhost:8000");
+import socket from "@/utils/socket";
 
 const GameDetails = ({ roomCode }: { roomCode: string }) => {
   const { data: session } = useSession();
@@ -19,7 +17,7 @@ const GameDetails = ({ roomCode }: { roomCode: string }) => {
     const receiveGameHandler = async () => {
       const room = await fetch(`${getRoom}/${roomCode}`);
       const data = await room.json();
-      
+    
       setGame({
         ...game,
         ...data.data

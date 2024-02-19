@@ -1,7 +1,5 @@
 import { updateRoom } from "@/constants/apiUrl";
-import { io } from "socket.io-client";
-
-const socket = io("http://localhost:8000");
+import socket from "./socket";
 
 export async function handleGameState(
   game: Game,
@@ -9,8 +7,13 @@ export async function handleGameState(
   updatedBoard: string[],
   updatedTurn: string
 ) {
+  setGame({ ...game, board: updatedBoard, turn: updatedTurn });
   try {
-    socket.emit("updateGame", { board: updatedBoard, turn: updatedTurn, roomCode:game.roomCode });
+    socket.emit("updateGame", {
+      board: updatedBoard,
+      turn: updatedTurn,
+      roomCode: game.roomCode,
+    });
 
     const res = await fetch(`${updateRoom}/${game?.roomCode}`, {
       method: "PATCH",
@@ -29,9 +32,8 @@ export async function handleGameState(
       console.error("Failed to update game state in API:", res.status);
       return;
     }
-    
   } catch (error) {
-    if(error instanceof Error){
+    if (error instanceof Error) {
       console.error("Error handling game state:", error?.message);
     }
   }

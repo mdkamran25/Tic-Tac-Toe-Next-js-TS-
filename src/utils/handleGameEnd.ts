@@ -1,7 +1,5 @@
 import { createResult, updateRoom } from "@/constants/apiUrl";
-import { io } from "socket.io-client";
-
-const socket = io("http://localhost:8000");
+import socket from "./socket";
 
 export async function handleGameEnd(
   game: Game,
@@ -10,17 +8,21 @@ export async function handleGameEnd(
   updatedTurn: string,
   winner: string
 ) {
-  console.log("Handle Game End");
   if (winner)
-    socket.emit("updateGame", {
+    setGame({
+      ...game,
       board: updatedBoard,
       turn: updatedTurn,
       winner: winner,
-      roomCode: game.roomCode,
     });
-    
+  socket.emit("updateGame", {
+    board: updatedBoard,
+    turn: updatedTurn,
+    winner: winner,
+    roomCode: game.roomCode,
+  });
+
   try {
-    console.log("Update room API called");
     const res = await fetch(`${updateRoom}/${game?.roomCode}`, {
       method: "PATCH",
       headers: {
@@ -42,7 +44,6 @@ export async function handleGameEnd(
   }
 
   try {
-    console.log("create result api called");
     const res = await fetch(createResult, {
       method: "POST",
       headers: {
