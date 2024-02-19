@@ -6,10 +6,8 @@ export async function PATCH(
   req: Request,
   { params }: { params: JoinRoomApiParams }
 ) {
-  console.log("Update room Api is called")
   const { roomCode } = params;
   const game = await req.json();
-  // console.log({game}, roomCode);
   await connectMongoDb();
   try {
     const room = await Game.findOneAndUpdate(

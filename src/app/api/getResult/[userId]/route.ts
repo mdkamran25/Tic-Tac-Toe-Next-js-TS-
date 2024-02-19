@@ -9,7 +9,6 @@ export async function GET(
   const { userId } = params;
 
   try {
-    console.log("Get Result API called");
     await connectMongoDb();
 
     const aggregationPipeline = [

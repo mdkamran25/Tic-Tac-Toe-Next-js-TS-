@@ -12,7 +12,6 @@ export async function PATCH(
 
   await connectMongoDb();
   try {
-    console.log("Join Room Api is called")
     const roomExist = await Game.findOne({ roomCode });
 
     if (!roomExist) {

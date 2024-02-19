@@ -4,10 +4,8 @@ import Game from "../../../../models/gameModel";
 
 export async function POST(req: Request) {
   try {
-    console.log("Create room API called");
     await connectMongoDb();
     const { game } = await req.json();
-    // console.log("Room Code: ", game)
 
     const roomExist = await Game.findOne({ roomCode: game.roomCode });
     if (roomExist) {

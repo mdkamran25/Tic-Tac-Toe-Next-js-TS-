@@ -9,7 +9,6 @@ export async function GET(
   const { roomCode } = params;
 
   try {
-    console.log("Get Room APi called")
     await connectMongoDb();
     const room = await Game.findOne({ roomCode })
       .populate("playerXId")
