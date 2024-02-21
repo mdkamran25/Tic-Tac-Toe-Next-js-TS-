@@ -10,7 +10,12 @@ import { handleGameState } from "@/utils/handleGameState";
 import { handleGameEnd } from "@/utils/handleGameEnd";
 import socket from "@/utils/socket";
 
-function Square({ value, i, session }: SquareProps) {
+
+interface Props extends SquareProps{
+  session: ClientSideSession | undefined;
+}
+
+function Square({ value, i, session }: Props) {
   const { game, setGame } = useContext(GameContext) as GameContextType;
   
   useEffect(()=>{
@@ -56,7 +61,7 @@ async function handlePlayer(index: number) {
 
 const Squares = ({ i }: SquaresProps) => {
   const { game } = useContext(GameContext) as GameContextType;
-  const { data: session } = useSession();
+  const { data: session  } = useSession();
 
   const value =
     game.board[i] === "X" ? <XIcon /> : game.board[i] === "O" ? <OIcon /> : null;

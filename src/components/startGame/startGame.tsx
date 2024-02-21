@@ -49,7 +49,7 @@ const StartGame = ({ userData }: { userData: UserResponseData }) => {
         socket.emit("joinSocketChannel", customRoomCode)
         router.push(`/room/${customRoomCode}`);
       } else {
-        showErrorToast(data.message);
+        showErrorToast(data.message, "error");
         setLoading({ ...loading, createRoom: false });
         throw new Error("Failed to create room");
       }
@@ -83,7 +83,7 @@ const StartGame = ({ userData }: { userData: UserResponseData }) => {
 
         const data = await res.json();
         if (!res.ok) {
-          showErrorToast(data.message);
+          showErrorToast(data.message, "error");
           setLoading({ ...loading, joinRoom: false });
           return;
         }
