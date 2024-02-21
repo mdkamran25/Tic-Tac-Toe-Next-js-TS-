@@ -1,13 +1,24 @@
 "use client";
+
 import { useState } from "react";
+
 import Image from "next/image";
+
 import profileImage from "../../assets/profileIcon.svg";
-import whiteBgProfileIcon from '../../assets/whiteBgProfileIcon.svg'
+
+import whiteBgProfileIcon from "../../assets/whiteBgProfileIcon.svg";
+
 import { signOut } from "next-auth/react";
+
 import PortalProvider from "../components/portalProvider/portalProvider";
 
-const ProfileModal = () => {
+const ProfileModal = ({
+  userName,
+}: {
+  userName: string | null | undefined;
+}) => {
   const [openModal, setOpenModal] = useState(false);
+
   return (
     <div className="relative">
       <button
@@ -38,7 +49,7 @@ const ProfileModal = () => {
                 alt="profile Image"
               />
 
-              <p className="font-semibold text-black pt-1">Md Karman</p>
+              <p className="font-semibold text-black pt-1">{userName}</p>
             </div>
 
             <ul className="text-center">
