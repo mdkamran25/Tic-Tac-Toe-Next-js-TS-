@@ -1,21 +1,24 @@
+import { Session } from "next-auth";
+
 export const checkTurn = (
   game: Game,
-  session: Session | undefined,
-  i: number,
+  session: ClientSideSession | undefined,
+  i: number
 ) => {
-  if (!game.winner  && 
+  if (
+    !game.winner &&
     game.status &&
     game.board[i] === "" &&
     game.turn === "X" &&
-    (game.playerXId as UserData).email === session!.email
+    (game.playerXId as UserData).email === session?.email
   ) {
     return false;
   } else if (
-    !game.winner && 
+    !game.winner &&
     game.status &&
     game.board[i] === "" &&
     game.turn === "O" &&
-    (game.playerOId as UserData).email === session!.email
+    (game.playerOId as UserData).email === session?.email
   ) {
     return false;
   } else {

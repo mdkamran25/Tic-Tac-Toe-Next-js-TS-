@@ -5,7 +5,7 @@ import Game from "../../../../../models/gameModel";
 export async function PATCH(
   req: Request,
   { params }: { params: JoinRoomApiParams }
-) {
+): Promise<void | Response> {
   const { roomCode } = params;
   const game = await req.json();
   const { playerOId, status } = game;
@@ -45,5 +45,4 @@ export async function PATCH(
         { status: 500 }
       );
   }
-  return null;
 }

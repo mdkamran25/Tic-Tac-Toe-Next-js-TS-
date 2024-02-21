@@ -115,6 +115,7 @@ interface JoinRoomApiParams {
 }
 
 interface Session {
+  session: any;
   name?: string | null | undefined;
   email?: string | null | undefined;
   image?: string | null | undefined;
@@ -127,7 +128,6 @@ interface SquaresProps {
 interface SquareProps {
   value: JSX.Element | null;
   i: number;
-  session: Session | undefined;
 }
 
 interface WindowSize {
@@ -155,3 +155,27 @@ interface ResultResponse {
   };
   status: boolean;
 }
+
+interface Token {
+  _id:string|undefined;
+  name: string;
+  email: string;
+  sub: string;
+  picture: undefined;
+  id: string;
+  iat: number;
+  exp: number;
+  jti: string;
+}
+
+interface CallbacksSession{
+  id:string|undefined,
+  user: { name: string|undefined, email: string|undefined, image: string|undefined },
+  expires: string
+}
+
+interface ClientSideSession {
+  name?: string | null | undefined;
+  email?: string | null | undefined;
+  image?: string | null | undefined;
+} 
