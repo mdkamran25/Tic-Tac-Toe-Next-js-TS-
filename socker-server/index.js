@@ -4,7 +4,7 @@ import { Server } from "socket.io";
 import dotenv from 'dotenv'
 dotenv.config()
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8000;
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
