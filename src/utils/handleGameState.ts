@@ -9,10 +9,14 @@ export async function handleGameState(
 ) {
   setGame({ ...game, board: updatedBoard, turn: updatedTurn });
   try {
+    socket.emit("joinSocketChannel", game.roomCode);
+
     socket.emit("updateGame", {
       board: updatedBoard,
       turn: updatedTurn,
       roomCode: game.roomCode,
+      status: true,
+      winner: null,
     });
 
     const res = await fetch(`${updateRoom}/${game?.roomCode}`, {

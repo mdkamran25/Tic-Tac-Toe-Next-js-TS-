@@ -13,6 +13,8 @@ const ResultModal = ({ status }: { status: string }) => {
   const {game} = useContext(GameContext) as GameContextType;
   const router = useRouter();
   const closeModal = () => {
+    socket.emit("joinSocketChannel", game.roomCode);
+
     socket.emit("leaveGame", {
       roomCode: game.roomCode,
       message: "Opponent left game",
