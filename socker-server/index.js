@@ -21,21 +21,22 @@ const io = new Server(server, {
       socketConnections.set(socketId, socket);
   
       socket.on("joinSocketChannel", (data) => {
-          socket.join(data);
+        console.log("Join Socket Room")  
+        socket.join(data);
       });
   
       socket.on("joinGame", (data) => {
-        console.log("Joined", data)
+        console.log("Joined Game")
           socket.to(data.roomCode).emit("recieveJoinGame", data);
       });
   
       socket.on("updateGame", (data) => {
-        console.log("Updated", {data})
+        console.log("Update Game")
           socket.to(data.roomCode).emit("recieveUpdateGameData",data);
       });
   
       socket.on("leaveGame", (data) => {
-        console.log({data})
+        console.log("Leave Game")
           socket.to(data.roomCode).emit("recieveLeaveGame", data.message);
       });
 
