@@ -125,7 +125,6 @@ const StartGame = ({ userData }: { userData: UserResponseData }) => {
     }
   };
 
-  console.log(errors.joinRoomCode);
 
   return (
     <>
