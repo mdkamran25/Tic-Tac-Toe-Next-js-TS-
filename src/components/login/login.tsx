@@ -7,9 +7,6 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-const InputClass =
-  "rounded-md appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm";
-
 interface LoginState {
   email: string;
   password: string;
@@ -77,14 +74,14 @@ export default function Login() {
           <label htmlFor="email" className="pb-1">
             Email address
           </label>
-          <input className={InputClass} {...register("email")} />
+          <input className="inputClass" {...register("email")} />
           <p className="text-red-600">{errors.email?.message}</p>
         </div>
         <div className="my-5">
           <label htmlFor="password" className="pb-1 ">
             Password
           </label>
-          <input type="password" className={InputClass} {...register("password")} />
+          <input type="password" className="inputClass" {...register("password")} />
           <p className="text-red-600">{errors.password?.message}</p>
         </div>
       </div>

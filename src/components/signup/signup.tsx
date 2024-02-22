@@ -6,8 +6,6 @@ import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-const InputClass =
-  "rounded-md appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm";
 
 interface SignupState {
   name: string;
@@ -93,14 +91,14 @@ const Signup = () => {
           <label htmlFor="name" className="pb-1">
             Name
           </label>
-          <input className={InputClass} {...register("name")} />
+          <input className="inputClass" {...register("name")} />
           <p className="text-red-600">{errors.name?.message}</p>
         </div>
         <div className="my-5">
           <label htmlFor="email" className="pb-1">
             Email address
           </label>
-          <input className={InputClass} {...register("email")} />
+          <input className="inputClass" {...register("email")} />
           <p className="text-red-600">{errors.email?.message}</p>
         </div>
         <div className="my-5">
@@ -109,7 +107,7 @@ const Signup = () => {
           </label>
           <input
             type="password"
-            className={InputClass}
+            className="inputClass"
             {...register("password")}
           />
           <p className="text-red-600">{errors.password?.message}</p>
@@ -120,7 +118,7 @@ const Signup = () => {
           </label>
           <input
             type="password"
-            className={InputClass}
+            className="inputClass"
             {...register("confirmPassword")}
           />
           <p className="text-red-600">{errors.confirmPassword?.message}</p>
