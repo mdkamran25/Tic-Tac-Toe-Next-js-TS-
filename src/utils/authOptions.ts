@@ -1,4 +1,3 @@
-import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import connectMongoDb from "./dbConnection";
 import User from "../../models/userModel";

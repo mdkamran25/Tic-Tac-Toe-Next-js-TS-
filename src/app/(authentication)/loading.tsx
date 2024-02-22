@@ -2,7 +2,7 @@ import Image from "next/image";
 import loaderIcon from '../../../assets/loaderIcon.svg'
 export default function Loading() {
   return (
-    <div className="flex justify-center items-center ">
+    <div className="flex justify-center items-center my-0 ">
       <Image
         className="inline mt-[2px] w-4 h-4 me-3 text-white animate-spin"
         src={loaderIcon}
