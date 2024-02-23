@@ -20,6 +20,10 @@ const io = new Server(server, {
   
       socketConnections.set(socketId, socket);
   
+      socket.on("renderIssue", ()=>{
+        console.log("Making Immediate Connection")
+      })
+
       socket.on("joinSocketChannel", (data) => {
         console.log("Join Socket Room")  
         socket.join(data);
