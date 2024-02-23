@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import LoadingButton from "../loadingButton/loadingButton";
 import { joinRoom, room } from "@/constants/apiUrl";
 import { GameContext } from "@/context/gameContext";
@@ -39,6 +39,10 @@ const StartGame = ({ userData }: { userData: UserResponseData }) => {
   } = useForm<JoinRoomState>({
     resolver: yupResolver(schema) as Resolver<JoinRoomState>,
   });
+
+  useEffect(() => {
+    socket.emit("renderIssue");
+  }, []);
 
   const [loading, setLoading] = useState({
     createRoom: false,
@@ -124,7 +128,6 @@ const StartGame = ({ userData }: { userData: UserResponseData }) => {
       }
     }
   };
-
 
   return (
     <>
