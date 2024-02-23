@@ -5,11 +5,13 @@ import ResultModel from "../../../../../models/resultModel";
 import UserModel from "../../../../../models/userModel";
 
 export async function GET(
-  _req: Request,
-  { params }: { params: { id: string } }
+  req: Request,
+  { params, query }: { params: { id: string }; query: { page: string } }
 ) {
   const { id } = params;
-
+  const page = parseInt(query?.page) || 1; // Default to page 1 if page param is not provided
+  const limit = 10;
+  const skip = (page - 1) * limit;
 
   try {
     await connectMongoDb();
@@ -19,14 +21,17 @@ export async function GET(
         { "player.x": new mongoose.Types.ObjectId(id) },
         { "player.o": new mongoose.Types.ObjectId(id) },
       ],
-    }).select("createdAt winner player.x player.o");
+    })
+      .select("createdAt winner player.x player.o")
+      .skip(skip)
+      .limit(limit);
 
     await ResultModel.populate(matchData, [
       { path: "player.x", model: UserModel, select: "name" },
       { path: "player.o", model: UserModel, select: "name" },
     ]);
 
-    const matchDataWithOpponentName:MatchDataWithOpponentName[] =
+    const matchDataWithOpponentName: MatchDataWithOpponentName[] =
       matchData.map((match) => {
         const playerId = new mongoose.Types.ObjectId(id);
         const winner =
@@ -53,6 +58,7 @@ export async function GET(
           opponentName,
         };
       });
+
     return NextResponse.json({ matchData: matchDataWithOpponentName });
   } catch (error) {
     console.error("Error retrieving match data:", error);
