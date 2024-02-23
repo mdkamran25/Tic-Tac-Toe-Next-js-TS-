@@ -6,7 +6,6 @@ import { GameContext } from "@/context/gameContext";
 
 const GameBoard = ({ roomData }: { roomData: Game }) => {
   const { setGame } = useContext(GameContext) as GameContextType;
-
   
   useEffect(()=>{
     setGame({
