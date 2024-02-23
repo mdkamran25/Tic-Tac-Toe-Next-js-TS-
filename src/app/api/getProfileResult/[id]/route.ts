@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
+import mongoose from "mongoose";
 import connectMongoDb from "../../../../utils/dbConnection";
-import Result from "../../../../../models/resultModel";
+import ResultModel from "../../../../../models/resultModel";
+import UserModel from "../../../../../models/userModel";
 
 export async function GET(
   _req: Request,
@@ -8,99 +10,52 @@ export async function GET(
 ) {
   const { id } = params;
 
+
   try {
     await connectMongoDb();
 
-    const aggregationPipeline = [
-      {
-        $match: {
-          $or: [{ "player.x": userId }, { "player.o": userId }],
-        },
-      },
-      {
-        $group: {
-          _id: null,
-          totalGames: { $sum: 1 },
-          totalWins: {
-            $sum: {
-              $cond: [
-                { $eq: ["$winner", "X"] },
-                {
-                  $cond: [{ $eq: ["$player.x", userId] }, 1, 0],
-                },
-                {
-                  $cond: [
-                    { $eq: ["$winner", "O"] },
-                    {
-                      $cond: [{ $eq: ["$player.o", userId] }, 1, 0],
-                    },
-                    0,
-                  ],
-                },
-              ],
-            },
-          },
-          totalLosses: {
-            $sum: {
-              $cond: [
-                { $eq: ["$winner", "X"] },
-                {
-                  $cond: [{ $eq: ["$player.x", userId] }, 0, 1],
-                },
-                {
-                  $cond: [
-                    { $eq: ["$winner", "O"] },
-                    {
-                      $cond: [{ $eq: ["$player.o", userId] }, 0, 1],
-                    },
-                    0,
-                  ],
-                },
-              ],
-            },
-          },
-          totalDraws: {
-            $sum: {
-              $cond: [{ $eq: ["$winner", "Match Draw"] }, 1, 0],
-            },
-          },
-        },
-      },
-    ];
+    const matchData = await ResultModel.find({
+      $or: [
+        { "player.x": new mongoose.Types.ObjectId(id) },
+        { "player.o": new mongoose.Types.ObjectId(id) },
+      ],
+    }).select("createdAt winner player.x player.o");
 
-    const resultAggregation = await Result.aggregate(aggregationPipeline);
-    const aggregatedResult = resultAggregation[0];
+    await ResultModel.populate(matchData, [
+      { path: "player.x", model: UserModel, select: "name" },
+      { path: "player.o", model: UserModel, select: "name" },
+    ]);
 
-    if (!aggregatedResult) {
-      return NextResponse.json(
-        {
-          message: "Results found",
-          data: {
-            _id: null,
-            totalGames: 0,
-            totalWins: 0,
-            totalLosses: 0,
-            totalDraws: 0,
-          },
-          status: true,
-        },
-        { status: 200 }
-      );
-    }
-    return NextResponse.json(
-      {
-        message: "Results found",
-        data: aggregatedResult,
-        status: true,
-      },
-      { status: 200 }
-    );
+    const matchDataWithOpponentName:MatchDataWithOpponentName[] =
+      matchData.map((match) => {
+        const playerId = new mongoose.Types.ObjectId(id);
+        const winner =
+          match.winner === "X"
+            ? match.player.x.equals(playerId)
+              ? "You Won"
+              : match.player.o.equals(playerId)
+              ? "You Lost"
+              : ""
+            : match.winner === "O"
+            ? match.player.o.equals(playerId)
+              ? "You Won"
+              : match.player.x.equals(playerId)
+              ? "You Lost"
+              : ""
+            : "Match Draw";
+        const matchedPlayerId = match.player.x.equals(playerId)
+          ? match.player.o
+          : match.player.x;
+        const opponentName = (matchedPlayerId)?.name || "";
+        return {
+          time: match.createdAt as string,
+          winner: winner,
+          opponentName,
+        };
+      });
+    return NextResponse.json({ matchData: matchDataWithOpponentName });
   } catch (error) {
-    if (error instanceof Error) {
-      return NextResponse.json(
-        { message: error.message, status: false },
-        { status: 500 }
-      );
-    }
+    console.error("Error retrieving match data:", error);
+    return NextResponse.error();
   }
 }

@@ -1,6 +1,5 @@
 import { user, getResult } from "@/constants/apiUrl";
 import { Session, getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 import DashboardCard from "@/components/dashboardCard/card";
 import Image from "next/image";
 import win from "./../../assets/trophy.svg";
@@ -14,9 +13,6 @@ import ProfileModal from "@/modals/profileModal";
 export default async function Dashboard() {
   const session: Session | null = await getServerSession();
 
-  // if (!session) {
-  //   redirect("/login");
-  // }
 
   const res = await fetch(`${user}/${session?.user?.email}`);
   const resData = (await res.json()) as UserResponseData;
