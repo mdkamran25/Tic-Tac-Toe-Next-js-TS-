@@ -15,20 +15,20 @@ interface JoinRoomState {
   joinRoomCode: number;
 }
 
-const schema = yup
-  .object()
-  .shape({
-    joinRoomCode: yup
-      .number()
-      .typeError("Room code is required to join the room")
-      .test("is-6-digits", "Enter 6 digit room code", (value) => {
-        if (value) {
-          return value.toString().length === 6;
-        }
+const schema = yup.object().shape({
+  joinRoomCode: yup
+    .number()
+    .typeError("Room code must be a number")
+    .test("is-6-digits", "Enter a 6-digit room code", (value) => {
+      if (!value) {
         return true;
-      }),
-  })
-  .required();
+      }
+      return /^\d{6}$/.test(value.toString()); // Check if value is exactly 6 digits
+    })
+    .required("Room code is required"),
+});
+
+
 
 const StartGame = ({ userData }: { userData: UserResponseData }) => {
   const { game, setGame } = useContext(GameContext) as GameContextType;

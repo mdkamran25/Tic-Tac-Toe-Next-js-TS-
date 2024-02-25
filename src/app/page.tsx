@@ -20,7 +20,6 @@ export default async function Dashboard() {
   const result = await fetch(`${getResult}/${resData.data._id}`);
   const resultData = (await result.json()) as ResultResponse;
 
-
   return (
     <div className="w-screen h-screen flex flex-col">
       <div className="w-screen px-3 md:px-8 mt-3 md:mt-5 flex flex-row">

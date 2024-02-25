@@ -1,10 +1,13 @@
+
 import DashboardHeader from "@/components/dashboardHeader/dashboardHeader";
 import { getProfileResult, user } from "@/constants/apiUrl";
 import ProfileModal from "@/modals/profileModal";
 import { Session, getServerSession } from "next-auth";
 import Table from "@/components/table/table";
-import Pagination from "@/components/pagination/pagination";
 import { redirect } from "next/navigation";
+import React, { useState } from "react";
+import Pagination from "@/components/pagination/pagination";
+
 const ProfilePage = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
 
@@ -20,6 +23,8 @@ const ProfilePage = async ({ params }: { params: { id: string } }) => {
   const result = await fetch(`${getProfileResult}/${id}`);
   const resultData = await result.json();
 
+ 
+
   return (
     <div className="w-screen h-screen flex flex-col">
       <div className="w-screen px-3 md:px-8 mt-3 md:mt-5 flex flex-row">
@@ -32,8 +37,8 @@ const ProfilePage = async ({ params }: { params: { id: string } }) => {
         </div>
       </div>
       <div className="w-[100vw] flex justify-center items-center h-[100%]">
-        <Table result={resultData?.matchData} />
-        <Pagination />
+        <Table result={resultData} />
+        
       </div>
     </div>
   );

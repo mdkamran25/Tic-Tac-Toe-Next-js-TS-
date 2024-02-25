@@ -2,9 +2,24 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import sortArrow from "../../../assets/sortArrow.svg";
+import Pagination from "../pagination/pagination";
 
 const Table = ({ result }: { result: any }) => {
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: string }>({ key: "", direction: "" });
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const itemsPerPage = 10;
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = result?.matchData.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
 
   const sortBy = (key: string) => {
     let direction = "ascending";
@@ -14,9 +29,9 @@ const Table = ({ result }: { result: any }) => {
     setSortConfig({ key, direction });
   };
 
-  let sortedData = [...result];
+  let sortedData = [...currentItems];
   if (sortConfig.key) {
-    sortedData = [...result].sort((a, b) => {
+    sortedData = [...currentItems].sort((a, b) => {
       if (sortConfig.direction === "ascending") {
         return a[sortConfig.key].localeCompare(b[sortConfig.key]);
       } else {
@@ -82,6 +97,11 @@ const Table = ({ result }: { result: any }) => {
           </table>
         </div>
       </div>
+      <Pagination
+          currentPage={currentPage}
+          totalPages={Math.ceil(result?.matchData.length / itemsPerPage)}
+          onPageChange={handlePageChange}
+        />
     </div>
   );
 };

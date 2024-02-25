@@ -9,7 +9,7 @@ export async function GET(
   { params, query }: { params: { id: string }; query: { page: string } }
 ) {
   const { id } = params;
-  const page = parseInt(query?.page) || 1; // Default to page 1 if page param is not provided
+  const page = parseInt(query?.page) || 1; 
   const limit = 10;
   const skip = (page - 1) * limit;
 
