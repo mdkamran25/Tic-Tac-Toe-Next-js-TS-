@@ -114,13 +114,12 @@ const StartGame = ({ userData }: { userData: UserResponseData }) => {
         playerOId: userData.data._id,
       });
       socket.emit("joinSocketChannel", room.joinRoomCode);
-
-      socket.emit("joinGame", {
-        status: true,
-        playerOId: userData.data,
-        roomCode: room.joinRoomCode,
-      });
-      router.push(`/room/${room.joinRoomCode}`);
+        socket.emit("joinGame", {
+          status: true,
+          playerOId: userData.data,
+          roomCode: room.joinRoomCode,
+        });
+        router.push(`/room/${room.joinRoomCode}`);
     } catch (error) {
       setLoading({ ...loading, joinRoom: false });
       if (error instanceof Error) {

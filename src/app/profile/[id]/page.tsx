@@ -5,8 +5,7 @@ import ProfileModal from "@/modals/profileModal";
 import { Session, getServerSession } from "next-auth";
 import Table from "@/components/table/table";
 import { redirect } from "next/navigation";
-import React, { useState } from "react";
-import Pagination from "@/components/pagination/pagination";
+import React from "react";
 
 const ProfilePage = async ({ params }: { params: { id: string } }) => {
   const { id } = params;

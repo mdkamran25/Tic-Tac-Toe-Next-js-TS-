@@ -9,9 +9,6 @@ export async function GET(
   { params, query }: { params: { id: string }; query: { page: string } }
 ) {
   const { id } = params;
-  const page = parseInt(query?.page) || 1; 
-  const limit = 10;
-  const skip = (page - 1) * limit;
 
   try {
     await connectMongoDb();
@@ -23,8 +20,7 @@ export async function GET(
       ],
     })
       .select("createdAt winner player.x player.o")
-      .skip(skip)
-      .limit(limit);
+      
 
     await ResultModel.populate(matchData, [
       { path: "player.x", model: UserModel, select: "name" },
