@@ -52,7 +52,7 @@ const Table = ({ result }: { result: any }) => {
                 </th>
                 <th scope="col" className="px-6 py-3">
                   <div className="flex gap-1 items-center hover:cursor-pointer" onClick={() => sortBy("opponentName")}>
-                    Player Name
+                    Opponent Name
                     <Image
                       src={sortArrow}
                       width={14}
@@ -86,7 +86,7 @@ const Table = ({ result }: { result: any }) => {
                     key={index}
                     className="border-b text-white transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-600"
                   >
-                    <td className="whitespace-nowrap px-6 py-4 font-medium">{index}</td>
+                    <td className="whitespace-nowrap px-6 py-4 font-medium">{((currentPage - 1) * 10)+ index }</td>
                     <td className="whitespace-nowrap px-6 py-4">{element?.opponentName}</td>
                     <td className="whitespace-nowrap px-6 py-4">{element?.winner}</td>
                     <td className="whitespace-nowrap px-6 py-4">{new Date(element.time).toLocaleDateString('en-GB')}</td>
