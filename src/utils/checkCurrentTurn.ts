@@ -1,5 +1,3 @@
-import { Session } from "next-auth";
-
 export const checkTurn = (
   game: Game,
   session: ClientSideSession | undefined,

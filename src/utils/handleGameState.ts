@@ -7,7 +7,13 @@ export async function handleGameState(
   updatedBoard: string[],
   updatedTurn: string
 ) {
-  setGame({ ...game, board: updatedBoard, turn: updatedTurn });
+  setGame({
+    ...game,
+    board: updatedBoard,
+    turn: updatedTurn,
+    status: true,
+    winner: null,
+  });
   try {
     socket.emit("joinSocketChannel", game.roomCode);
 
