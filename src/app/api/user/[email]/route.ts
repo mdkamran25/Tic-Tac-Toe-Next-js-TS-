@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import User from "../../../../../models/userModel";
+import UserModel from "../../../../../models/userModel";
 import connectMongoDb from "../../../../utils/dbConnection";
 import { cookies } from "next/headers";
 
@@ -8,7 +8,7 @@ export async function GET(
   { params }: { params: { email: string } }
 ) {
   await connectMongoDb();
-  const user = await User.findOne({ email: params?.email });
+  const user = await UserModel.findOne({ email: params?.email });
   const cookieStore = cookies();
   const visited = cookieStore.get("visited");
 

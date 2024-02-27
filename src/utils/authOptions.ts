@@ -1,19 +1,14 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import connectMongoDb from "./dbConnection";
-import User from "../../models/userModel";
+import UserModel from "../../models/userModel";
 import bcrypt from "bcrypt";
-import { Document } from "mongoose";
+import { User } from "next-auth";
 
-interface user extends Document {
-  name: string;
-  email: string;
-  password: string;
-}
 
-async function login(credentials: Credentials): Promise<any> {
+async function login(credentials: Credentials):Promise<User | null> {
   try {
     await connectMongoDb();
-    const user = await User.findOne({ email: credentials?.email });
+    const user = await UserModel.findOne({ email: credentials?.email });
     if (!user) throw new Error("Invalid User Credentials");
     const isCorrect = await bcrypt.compare(
       credentials?.password,
@@ -39,9 +34,9 @@ export const authOptions = {
       id: "credentials",
       name: "credentials",
       credentials: {},
-      async authorize(credentials: any) {
+      async authorize(credentials: Record<never, string> | undefined) {
         try {
-          const user = await login(credentials);
+          const user = await login(credentials as Credentials)
           return user;
         } catch (error: unknown) {
           if (error instanceof Error) {

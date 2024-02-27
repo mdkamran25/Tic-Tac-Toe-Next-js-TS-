@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import connectMongoDb from "../../../../utils/dbConnection";
-import Result from "../../../../../models/resultModel";
 import ResultModel from "../../../../../models/resultModel";
 import mongoose from "mongoose";
 
